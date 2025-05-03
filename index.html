@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Matatu Preloader - MMG Inspired</title>
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      /*background-image: url('images/background.png');*/
+      background-size: cover;
+      background-position: center bottom;
+      background-repeat: no-repeat;
+    }
+
+    .preloader {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .matatu-wrapper {
+      position: absolute;
+      bottom: 60px; /* Adjust as needed to match the road in your background */
+      left: 50%;
+      transform: translateX(-50%);
+      animation: bounce 1.5s infinite ease-in-out;
+      display: inline-block;
+    }
+
+    .matatu {
+      position: relative;
+      width: 320px;
+      height: 160px;
+      transform: rotate(2deg);
+    }
+
+    .matatu::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 260px;
+      height: 10px;
+      background: #e60000;
+      filter: blur(8px);
+      border-radius: 50%;
+      z-index: 0;
+    }
+
+    .body {
+  position: relative;
+  width: 280px;
+  height: 100px;
+  margin: 0 auto;
+  /*background: url('https://flagcdn.com/ca.svg') no-repeat center center;
+  background-size: cover;*/
+  border: 4px solid #e60000;
+  border-radius: 18px 40px 10px 10px;
+  display: flex;
+  z-index: 2;
+  box-shadow: 0 0 12px 2px #e60000;
+
+
+    }
+
+    .windows {
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      width: 190px;
+      height: 30px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .window-pane {
+      flex: 1;
+      background: transparent;
+      border: 2px solid #e60000;
+      border-radius: 4px;
+    }
+
+    .driver-window {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 40px;
+      height: 30px;
+      background: transparent;
+      border: 2px solid #e60000;
+      border-radius: 3px 20px 3px 3px;
+    }
+
+    .door {
+      position: absolute;
+      right: 10px;
+      top: 45px;
+      width: 40px;
+      height: 45px;
+      background: transparent;
+      border-left: 2px solid #e60000;
+      border-bottom: 2px solid #e60000;
+      border-right: 2px solid #e60000;
+      border-radius: 4px;
+    }
+
+    .open-lock {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 10px;
+      height: 5px;
+      border: 2px solid #e60000;
+    }
+
+    .holder {
+      width: 5px;
+      border: 2px solid #e60000;
+    }
+
+    .spoiler {
+      position: absolute;
+      top: -18px;
+      left: 20px;
+      width: 40px;
+      height: 8px;
+      background: #e60000;
+      transform: rotate(20deg);
+      border-radius: 3px;
+    }
+
+    .matatu-text {
+      position: absolute;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Impact', 'Arial Black', sans-serif;
+      font-size: 24px;
+      color: #e60000;
+      text-shadow: 1px 1px 2px #111;
+      letter-spacing: 1px;
+      z-index: 5;
+    }
+
+    .loudspeaker {
+      position: absolute;
+      top: -16px;
+      left: 15px;
+      width: 16px;
+      height: 16px;
+      background: #e60000;
+      clip-path: polygon(100% 0, 0 50%, 100% 100%);
+      transform: rotate(-25deg);
+      z-index: 4;
+    }
+
+    .wheel {
+      position: absolute;
+      bottom: 0px;
+      width: 42px;
+      height: 42px;
+      background: black;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      z-index: 1;
+      border: 3px solid #444;
+    }
+
+    .wheel::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 18px;
+      height: 18px;
+      background: #e60000;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .wheel.back {
+      left: 36px;
+      width: 48px;
+      height: 48px;
+    }
+
+    .wheel.front {
+      right: 36px;
+    }
+
+    .bumper {
+      position: absolute;
+      width: 26px;
+      height: 26px;
+      background: #e60000;
+      border-radius: 6px;
+    }
+
+    .bumper.back {
+      bottom: 58px;
+      left: 10px;
+    }
+
+    .bumper.front {
+      bottom: 58px;
+      right: 0px;
+    }
+
+    .fog-lights {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #e60000;
+      box-shadow: 0 0 4px 2px #e60000;
+      border: 1px solid black;
+      left: 10px;
+    }
+
+    .fog-lights.top {
+      top: 4px;
+    }
+
+    .fog-lights.bottom {
+      top: 18px;
+    }
+
+    .front-mirror {
+      position: absolute;
+      top: 18px;
+      right: -14px;
+      width: 10px;
+      height: 28px;
+      background: #e60000;
+      border-radius: 3px;
+      transform: rotate(10deg);
+      z-index: 5;
+    }
+
+    .mirror-stick {
+      position: absolute;
+      top: 3px;
+      left: 270px;
+      width: 2px;
+      height: 62px;
+      background-color: #e60000;
+      transform-origin: top left;
+      transform: rotate(-75deg);
+      z-index: 4;
+    }
+
+    .loading-text {
+      margin-top: 20px;
+      font-family: sans-serif;
+      font-size: 1.2em;
+      animation: blink 1s infinite;
+      color: white;
+    }
+
+    .chuma {
+      border: 3px solid #e60000;
+      width: 130px;
+      position: relative;
+      top: -45px;
+      right: -90px;
+      transform: rotate(2deg);
+    }
+
+    .flag-stick {
+      position: absolute;
+      top: -65px;
+      right: 45px;
+      width: 4px;
+      height: 70px;
+      background: #444;
+      z-index: 9;
+    }
+
+    .flag-on-top {
+      position: absolute;
+      top: -60px;
+      right: 50px;
+      width: 60px;
+      height: 35px;
+      overflow: hidden;
+      z-index: 10;
+      border: 1px solid #ccc;
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .flag-on-top img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      animation: wave 1s infinite ease-in-out;
+      transform-origin: left center;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="preloader">
+    <div class="matatu-wrapper">
+      <div class="matatu">
+        <div class="spoiler"></div>
+        <div class="body">
+          <div class="windows">
+            <div class="window-pane"></div>
+            <div class="window-pane"></div>
+            <div class="window-pane"></div>
+          </div>
+          <div class="driver-window"></div>
+          <div class="door">
+            <div class="open-lock">
+              <div class="holder"></div>
+            </div>
+          </div>
+          <div class="loudspeaker"></div>
+          <div class="matatu-text">Manunda</div>
+        </div>
+        <div class="bumper back"></div>
+        <div class="bumper front">
+          <div class="fog-lights top"></div>
+          <div class="fog-lights bottom"></div>
+        </div>
+        <div class="flag-stick"></div>
+        <div class="flag-on-top">
+          <img src="https://flagcdn.com/ca.svg" alt="Canadian Flag" />
+        </div>
+        <div class="mirror-stick"></div>
+        <div class="front-mirror"></div>
+        <div class="wheel back"></div>
+        <div class="wheel front"></div>
+      </div>
+      <div class="chuma"></div>
+    </div>
+    <!--<div class="loading-text">Loading...</div>-->
+  </div>
+</body>
+</html>
